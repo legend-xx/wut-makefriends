@@ -4,7 +4,7 @@
   <view class="search">
     <view class="search-text">
       <text class="iconfont iconsousuo1"></text>
-      <input type="text" placeholder="搜索喵星人" bindfocus="handleFocus" bindconfirm="handleConfirm" confirm-type="search" />
+      <input type="text" placeholder="搜索" bindfocus="handleFocus" bindconfirm="handleConfirm" confirm-type="search" />
     </view>
     <view wx:if="{{ isFocus }}" class="search-cancel" bindtap="handleCancel">取消</view>
   </view>

@@ -10,9 +10,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    longitude : '',
-    latitude : '',
-    markers : []
+    longitude: '',
+    latitude: '',
+    markers: []
   },
 
   /**
@@ -70,10 +70,10 @@ Page({
   onShareAppMessage: function () {
 
   },
-  getLocation(){
+  getLocation() {
     wx.getLocation({
       type: 'gcj02',
-      success: (res)=> {
+      success: (res) => {
         const latitude = res.latitude
         const longitude = res.longitude
         this.setData({
@@ -84,60 +84,42 @@ Page({
       }
     })
   },
-  getNearUsers(){
+  getNearUsers() {
     db.collection('users').where({
       location: _.geoNear({
         geometry: db.Geo.Point(this.data.longitude, this.data.latitude),
         minDistance: 0,
         maxDistance: 5000
       }),
-      isLocation : true
+      isLocation: true
     }).field({
-      longitude : true,
-      latitude : true,
-      userPhoto : true
-    }).get().then((res)=>{
-       //console.log( res.data );
-       let data = res.data;
-       let result = [];
-       if(data.length){
-         for(let i=0;i<data.length;i++){
-           if (data[i].userPhoto.includes('cloud://') ) {
-             wx.cloud.getTempFileURL({
-               fileList: [ data[i].userPhoto ],
-               success: res => {
-                 result.push({
-                   iconPath: res.fileList[0].tempFileURL,
-                   id: data[i]._id,
-                   latitude: data[i].latitude,
-                   longitude: data[i].longitude,
-                   width: 30,
-                   height: 30
-                 });
-                 this.setData({
-                   markers: result
-                 });
-               }
-             })
-           }
-           else {
-             result.push({
-               iconPath: data[i].userPhoto,
-               id: data[i]._id,
-               latitude: data[i].latitude,
-               longitude: data[i].longitude,
-               width: 30,
-               height: 30
-             });
-           }
-         }
-         this.setData({
-           markers: result
-         });
-       }
+      longitude: true,
+      latitude: true,
+      userPhoto: true
+    }).get().then((res) => {
+      // console.log(res.data);
+      let data = res.data;
+      let result = [];
+      if (data.length) {
+        for (let i = 0; i < data.length; i++) {
+          console.log(result);
+          result.push({
+            iconPath: data[i].userPhoto,
+            id: data[i]._id,
+            latitude: data[i].latitude,
+            longitude: data[i].longitude,
+            width: 30,
+            height: 30
+          });
+        }
+        this.setData({
+          markers: result
+        });
+      }
     });
   },
-  markertap(ev){
+  markertap(ev) {
+    // console.log(ev);
     wx.navigateTo({
       url: '/pages/detail/detail?userId=' + ev.markerId
     })

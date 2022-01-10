@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    friendList : []
+    friendList: []
   },
 
   /**
@@ -24,11 +24,11 @@ Page({
    */
   onReady: function () {
     db.collection('users').where({
-      friendList : app.userInfo._id
+      friendList: app.userInfo._id
     }).field({
-      userPhoto : true,
-      nickName : true
-    }).get().then((res)=>{
+      userPhoto: true,
+      nickName: true
+    }).get().then((res) => {
 
       this.setData({
         friendList: res.data

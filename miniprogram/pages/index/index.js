@@ -8,9 +8,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    imgUrls: [],
-    listData : [],
-    current : 'links'
+    swiperList: [],
+    listData: [],
+    current: 'links'
   },
 
   /**
@@ -19,13 +19,24 @@ Page({
   onLoad: function (options) {
 
   },
-
+  // 获取轮播图数据的方法
+  // getSwiperList() {
+  //   wx.request({
+  //     url: '',
+  //     method: 'GET',
+  //     success: (res) => {
+  //       this.setData({
+  //         swiperList: res.data
+  //       })
+  //     }
+  //   })
+  // },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
     this.getListData();
-    this.getBannerList();
+    // this.getSwiperList()
   },
 
   /**
@@ -69,68 +80,71 @@ Page({
   onShareAppMessage: function () {
 
   },
-  handleLinks(ev){
+  //点赞功能
+  handleLinks(ev) {
     let id = ev.target.dataset.id;
 
     wx.cloud.callFunction({
-      name : 'update',
-      data : {
-        collection : 'users',
+      name: 'update',
+      data: {
+        collection: 'users',
         doc: id,
-        data : "{links : _.inc(1)}"
+        data: "{links : _.inc(1)}"
       }
-    }).then((res)=>{
+    }).then((res) => {
       let updated = res.result.stats.updated;
-      if (updated){
+      if (updated) {
         let cloneListData = [...this.data.listData];
-        for (let i = 0; i < cloneListData.length;i++){
-          if (cloneListData[i]._id == id ){
+        for (let i = 0; i < cloneListData.length; i++) {
+          if (cloneListData[i]._id == id) {
             cloneListData[i].links++;
           }
         }
         this.setData({
-          listData : cloneListData
+          listData: cloneListData
         });
       }
     });
   },
-  handleCurrent(ev){
+  //推荐
+  handleCurrent(ev) {
     let current = ev.target.dataset.current;
-    if( current == this.data.current ){
+    if (current == this.data.current) {
       return false;
     }
     this.setData({
       current
-    },()=>{
+    }, () => {
       this.getListData();
     });
   },
-  getListData(){
+  getListData() {
     db.collection('users')
-    .field({
-      userPhoto: true,
-      nickName: true,
-      links: true
-    })
-    .orderBy(this.data.current, 'desc')
-    .get()
-    .then((res) => {
-      this.setData({
-        listData: res.data
+      .field({
+        userPhoto: true,
+        nickName: true,
+        links: true
+      })
+      .orderBy(this.data.current, 'desc')
+      .get()
+      .then((res) => {
+        this.setData({
+          listData: res.data
+        });
       });
-    });
   },
-  handleDetail(ev){
+  //点击跳转个人信息
+  handleDetail(ev) {
     let id = ev.target.dataset.id;
     wx.navigateTo({
       url: '/pages/detail/detail?userId=' + id
     })
   },
-  getBannerList(){
-    db.collection('banner').get().then((res)=>{
-      this.setData({
-        imgUrls : res.data
-      });
-    });
-  }
+  // getBannerList() {
+  //   db.collection('banner').get().then((res) => {
+  //     this.setData({
+  //       imgUrls: res.data
+  //     });
+  //   });
+  // }
 })

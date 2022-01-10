@@ -1,3 +1,16 @@
 /* miniprogram/pages/editUserInfo/name/name.wxss */
 
-input{ border:1px #b4b5b6 solid;}
+input {
+  width: 90%;
+  border: 1px #b4b5b6 solid;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+button {
+  margin-top: 40rpx;
+  border: 1px black solid;
+  width: 300rpx;
+  font-size: small;
+  font-weight: 100;
+}

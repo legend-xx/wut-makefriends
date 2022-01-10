@@ -3,24 +3,32 @@
 <wxs src="../../utils/wordSplit.wxs" module="m1" />
 <wxs src="../../utils/unitFormat.wxs" module="m2" />
 
-<search />
+<search></search>
 
 <view class="index">
-
-  <swiper class="index-swiper" indicator-dots="{{true}}"
-    autoplay="{{false}}" circular="{{true}}">
-    <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+  <!-- 轮播图 -->
+  <swiper class="index-swiper" indicator-dots="{{true}}" autoplay="{{true}}" circular="{{true}}">
+    <block wx:key="id">
+      <!--  <swiper-item>
+        <image src="{{item.image}}" class="slide-image" />
+      </swiper-item> -->
       <swiper-item>
-        <image src="{{item.fileId}}" class="slide-image" />
+        <image src="../../images/1.jpg" class="slide-image" />
+      </swiper-item>
+      <swiper-item>
+        <image src="../../images/2.jpg" class="slide-image" />
+      </swiper-item>
+      <swiper-item>
+        <image src="../../images/3.jpg" class="slide-image" />
       </swiper-item>
     </block>
   </swiper>
-
+  <!-- 推荐与最新 -->
   <view class="index-tab">
     <view class="{{ current == 'links' ? 'active' : '' }}" data-current="links" bindtap="handleCurrent">推荐</view>
     <view class="{{ current == 'time' ? 'active' : '' }}" data-current="time" bindtap="handleCurrent">最新</view>
   </view>
-
+  <!-- 列表 -->
   <view class="index-list">
     <view class="index-list-item" wx:for="{{ listData }}" wx:key="{{ index }}">
       <image mode="aspectFill" src="{{ item.userPhoto }}" data-id="{{ item._id }}" bindtap="handleDetail" />
@@ -28,7 +36,7 @@
         <text>{{ m1.wordSplit(item.nickName) }}</text>
         <text data-id="{{ item._id }}" bindtap="handleLinks">
           <text class="iconfont icondianzan"></text>
-          <text>{{ m2.unitFormat(item.links) }}</text>
+          <text class="num">{{ m2.unitFormat(item.links) }}</text>
         </text>
       </view>
     </view>

@@ -15,37 +15,37 @@
     "pages/editUserInfo/weixin/weixin"
   ],
   "window": {
-    "backgroundColor": "#F6F6F6",
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#937bf5",
-    "navigationBarTitleText": "喵喵的喵星人",
-    "navigationBarTextStyle": "white"
+    "backgroundColor": "#ffffff",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#265A88",
+    "navigationBarTitleText": "WUT校园交友",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true
   },
   "tabBar": {
-    "color": "#b4b5b6",
-    "selectedColor": "#937bf5",
-    "list": [
-      {
-        "iconPath": "images/tabbar/首页.png",
-        "selectedIconPath": "images/tabbar/首页_active.png",
+    "color": "#000000",
+    "selectedColor": "#265A88",
+    "list": [{
+        "iconPath": "images/tabs/index-noclick.png",
+        "selectedIconPath": "images/tabs/index-click.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
-        "iconPath": "images/tabbar/附近.png",
-        "selectedIconPath": "images/tabbar/附近_active.png",
+        "iconPath": "images/tabs/friend-noclick.png",
+        "selectedIconPath": "images/tabs/friend-click.png",
         "pagePath": "pages/near/near",
-        "text": "附近"
+        "text": "好友"
       },
       {
-        "iconPath": "images/tabbar/消息.png",
-        "selectedIconPath": "images/tabbar/消息_active.png",
+        "iconPath": "images/tabs/msg-noclick.png",
+        "selectedIconPath": "images/tabs/msg-click.png",
         "pagePath": "pages/message/message",
         "text": "消息"
       },
       {
-        "iconPath": "images/tabbar/我的.png",
-        "selectedIconPath": "images/tabbar/我的_active.png",
+        "iconPath": "images/tabs/me-noclick.png",
+        "selectedIconPath": "images/tabs/me-click.png",
         "pagePath": "pages/user/user",
         "text": "我的"
       }

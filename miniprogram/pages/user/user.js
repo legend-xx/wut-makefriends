@@ -9,18 +9,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userPhoto: "/images/user/user-unlogin.png",
-    nickName : "小喵喵",
-    logged : false,
-    disabled : true,
-    id : ''
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+    userPhoto: "",
+    nickName: "",
+    logged: false,
+    disabled: true,
+    id: ''
   },
 
   /**
@@ -31,28 +24,32 @@ Page({
     this.getLocation();
 
     wx.cloud.callFunction({
-      name : 'login',
-      data : {}
-    }).then((res)=>{
-      //console.log(res);
+      name: 'login',
+      data: {},
+    }).then((res) => {
+      // console.log(res);
       db.collection('users').where({
-        _openid : res.result.openid
-      }).get().then((res)=>{
-        if( res.data.length ){
+        _openid: res.result.openid
+      }).get().then((res) => {
+
+        if (res.data.length) {
+          // console.log(res);
           app.userInfo = Object.assign(app.userInfo, res.data[0]);
           this.setData({
             userPhoto: app.userInfo.userPhoto,
             nickName: app.userInfo.nickName,
             logged: true,
-            id : app.userInfo._id
+            id: app.userInfo._id
           });
+
           this.getMessage();
-        }
-        else{
+
+        } else {
           this.setData({
-            disabled : false
+            disabled: false
           });
         }
+
       });
     });
   },
@@ -62,93 +59,62 @@ Page({
    */
   onShow: function () {
     this.setData({
-      userPhoto : app.userInfo.userPhoto,
-      nickName : app.userInfo.nickName,
+      userPhoto: app.userInfo.userPhoto,
+      nickName: app.userInfo.nickName,
       id: app.userInfo._id
     });
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-  bindGetUserInfo(ev){
-     //console.log(ev);
-     let userInfo = ev.detail.userInfo;
-     if( !this.data.logged && userInfo ){
-       db.collection('users').add({
-         data : {
-           userPhoto: userInfo.avatarUrl,
-           nickName: userInfo.nickName,
-           signature : '',
-           phoneNumber : '',
-           weixinNumber : '',
-           links : 0,
-           time : new Date(),
-           isLocation : true,
-           longitude: this.longitude,
-           latitude: this.latitude,
-           location: db.Geo.Point(this.longitude, this.latitude),
-           friendList : []
-         }
-       }).then((res)=>{
-          db.collection('users').doc(res._id).get().then((res)=>{
-            //console.log(res.data);
-            app.userInfo = Object.assign( app.userInfo , res.data );
+  getUserProfile(ev) {
+    wx.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        // console.log(res);
+        let userInfo = res.userInfo
+        db.collection('users').add({
+          data: {
+            userPhoto: userInfo.avatarUrl,
+            nickName: userInfo.nickName,
+            signature: '',
+            phoneNumber: '',
+            weixinNumber: '',
+            links: 0,
+            time: new Date(),
+            isLocation: true,
+            longitude: this.longitude,
+            latitude: this.latitude,
+            location: db.Geo.Point(this.longitude, this.latitude),
+            friendList: []
+          }
+        }).then((res) => {
+          db.collection('users').doc(res._id).get().then((res) => {
+            app.userInfo = Object.assign(app.userInfo, res.data);
             this.setData({
-              userPhoto : app.userInfo.userPhoto,
-              nickName : app.userInfo.nickName,
-              logged : true,
+              userPhoto: app.userInfo.userPhoto,
+              nickName: app.userInfo.nickName,
+              logged: true,
               id: app.userInfo._id
             });
           });
-       });
-     }
+        });
+        // }
+      }
+    })
+
+
   },
-  getMessage(){
+  getMessage() {
     db.collection('message').where({
-      userId : app.userInfo._id
+      userId: app.userInfo._id
     }).watch({
       onChange: function (snapshot) {
-        if ( snapshot.docChanges.length ){
+        if (snapshot.docChanges.length) {
           let list = snapshot.docChanges[0].doc.list;
-          if( list.length ){
+          if (list.length) {
             wx.showTabBarRedDot({
               index: 2
             });
             app.userMessage = list;
-          }
-          else{
+          } else {
             wx.hideTabBarRedDot({
               index: 2
             })
@@ -161,7 +127,8 @@ Page({
       }
     });
   },
-  getLocation(){
+
+  getLocation() {
     wx.getLocation({
       type: 'gcj02',
       success: (res) => {

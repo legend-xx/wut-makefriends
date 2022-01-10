@@ -1,3 +1,15 @@
 /* miniprogram/pages/message/message.wxss */
-.message{ padding:20rpx;}
-.message-text{ margin:30rpx;}
+.message {
+  padding: 20rpx;
+}
+
+.message-text {
+  margin: 30rpx;
+}
+
+.message-notext {
+  position: fixed;
+  top: 50%;
+  left: 35.5%;
+  color: rgba(180, 185, 189, 0.973);
+}

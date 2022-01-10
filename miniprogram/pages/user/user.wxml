@@ -1,32 +1,56 @@
 <!--miniprogram/pages/user/user.wxml-->
 <view class="user">
 
-  <view class="user-info">
-    <image src="{{ userPhoto }}" />
-    <text wx:if="{{logged}}">欢迎您：{{ nickName }}</text>
-    <button wx:else disabled="{{ disabled }}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">微信登录</button>
+  <view wx:if="{{!logged}}" class="user-nologin">
+    <image src="../../images/wut.jpg"></image>
+    <text class="title">WUT交友</text>
+    <text class="slogan">追求卓越，走向成功！</text>
+    <button disabled="{{ disabled }}" bindtap="getUserProfile">微信登录</button>
   </view>
 
   <view wx:if="{{ logged }}" class="user-list">
+
+    <view class="user-login">
+      <image src="{{ userPhoto }}" />
+      <text>{{ nickName }}</text>
+    </view>
+
     <navigator url="../editUserInfo/editUserInfo" open-type="navigate">
       <view class="user-list-item">
+        <image class="item-image" src="/images/edit.png" />
         <text>编辑个人信息</text>
-        <text class="iconfont iconarrowRight"></text>
+        <image class="right-image" src="/images/right.png" />
       </view>
     </navigator>
+
     <navigator url="../friendList/friendList" open-type="navigate">
       <view class="user-list-item">
+        <image class="item-image" src="/images/friends.png" />
         <text>查看好友列表</text>
-        <text class="iconfont iconarrowRight"></text>
+        <image class="right-image" src="/images/right.png" />
       </view>
     </navigator>
+
     <navigator url="{{ '../detail/detail?userId=' + id }}" open-type="navigate">
-      <view class="user-list-item">
+      <view class="user-list-item user-list-interval">
+        <image class="item-image" src="/images/homepage.png" />
         <text>个人主页</text>
-        <text class="iconfont iconarrowRight"></text>
+        <image class="right-image" src="/images/right.png" />
       </view>
     </navigator>
+
+    <!-- 意见反馈 -->
+    <view class="user-list-item">
+      <image class="item-image" src="/images/feedback.png" />
+      <button hover-class="none" open-type="feedback">意见反馈</button>
+      <image class="right-image" src="/images/right.png" />
+    </view>
+    <!-- 在线客服 -->
+    <view class="user-list-item">
+      <image class="item-image" src="/images/contact.png" />
+      <button hover-class="none" open-type="contact">在线客服</button>
+      <image class="right-image" src="/images/right.png" />
+    </view>
   </view>
 
 </view>
-

@@ -17,36 +17,36 @@ Component({
    * 组件的初始数据
    */
   data: {
-    isFocus : false,
-    historyList : [],
-    searchList : []
+    isFocus: false,
+    historyList: [],
+    searchList: []
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-    handleFocus(){
+    handleFocus() {
 
       wx.getStorage({
         key: "searchHistory",
-        success: (res)=> {
+        success: (res) => {
           this.setData({
-            historyList : res.data
+            historyList: res.data
           });
         }
       })
 
       this.setData({
-        isFocus : true
+        isFocus: true
       });
     },
-    handleCancel(){
+    handleCancel() {
       this.setData({
         isFocus: false
       });
     },
-    handleConfirm(ev){
+    handleConfirm(ev) {
       let value = ev.detail.value;
       let cloneHistoryList = [...this.data.historyList];
       cloneHistoryList.unshift(value);
@@ -56,32 +56,32 @@ Component({
       });
       this.changeSearchList(value);
     },
-    handleHistoryDelete(){
+    handleHistoryDelete() {
       wx.removeStorage({
         key: 'searchHistory',
-        success:(res)=>{
+        success: (res) => {
           this.setData({
-            historyList : []
+            historyList: []
           });
         }
       })
     },
-    changeSearchList(value){
+    changeSearchList(value) {
       db.collection('users').where({
         nickName: db.RegExp({
           regexp: value,
           options: 'i'
         })
       }).field({
-        userPhoto : true,
-        nickName : true
-      }).get().then((res)=>{
+        userPhoto: true,
+        nickName: true
+      }).get().then((res) => {
         this.setData({
-          searchList : res.data
+          searchList: res.data
         });
       });
     },
-    handleHistoryItemDel(ev){
+    handleHistoryItemDel(ev) {
       let value = ev.target.dataset.text;
       this.changeSearchList(value);
     }

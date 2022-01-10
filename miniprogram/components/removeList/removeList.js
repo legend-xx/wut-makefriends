@@ -5,30 +5,19 @@ const db = wx.cloud.database()
 const _ = db.command
 
 Component({
-  /**
-   * 组件的属性列表
-   */
   properties: {
-    messageId : String
+    messageId: String
   },
-
-  /**
-   * 组件的初始数据
-   */
   data: {
-    userMessage : {}
+    userMessage: {}
   },
-
-  /**
-   * 组件的方法列表
-   */
   methods: {
-    handleDelMessage(){
+    handleDelMessage() {
       wx.showModal({
         title: '提示信息',
         content: '删除消息',
         confirmText: '删除',
-        success:(res)=>{
+        success: (res) => {
           if (res.confirm) {
             this.removeMessage();
           } else if (res.cancel) {
@@ -37,7 +26,7 @@ Component({
         }
       })
     },
-    handleAddFriend(){
+    handleAddFriend() {
       wx.showModal({
         title: '提示信息',
         content: '申请好友',
@@ -45,18 +34,18 @@ Component({
         success: (res) => {
           if (res.confirm) {
             db.collection('users').doc(app.userInfo._id).update({
-              data : {
-                friendList : _.unshift(this.data.messageId)
+              data: {
+                friendList: _.unshift(this.data.messageId)
               }
-            }).then((res)=>{}); 
+            }).then((res) => {});
             wx.cloud.callFunction({
-              name : 'update',
-              data : {
-                collection : 'users',
-                doc : this.data.messageId,
+              name: 'update',
+              data: {
+                collection: 'users',
+                doc: this.data.messageId,
                 data: `{friendList: _.unshift('${app.userInfo._id}')}`
               }
-            }).then((res)=>{});
+            }).then((res) => {});
             this.removeMessage();
           } else if (res.cancel) {
             console.log('用户点击取消')
@@ -64,7 +53,7 @@ Component({
         }
       })
     },
-    removeMessage(){
+    removeMessage() {
       db.collection('message').where({
         userId: app.userInfo._id
       }).get().then((res) => {
@@ -92,12 +81,12 @@ Component({
   lifetimes: {
     attached: function () {
       db.collection('users').doc(this.data.messageId).field({
-        userPhoto : true,
-        nickName : true
-      }).get().then((res)=>{
-          
+        userPhoto: true,
+        nickName: true
+      }).get().then((res) => {
+
         this.setData({
-          userMessage : res.data
+          userMessage: res.data
         });
 
       });

@@ -1,7 +1,6 @@
-
-var unitFormat = function(number){
-  if( number >= 1000 ){
-    number = (number/1000).toFixed(1) + 'K';
+var unitFormat = function (number) {
+  if (number >= 1000) {
+    number = (number / 1000).toFixed(1) + 'K';
   }
   return number;
 };

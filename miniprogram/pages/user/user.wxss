@@ -1,9 +1,101 @@
 /* miniprogram/pages/user/user.wxss */
-.user-info{ height:150rpx; border:1px #b4b5b6 solid; border-left:none; 
-border-right:none;display:flex; align-items: center;}
-.user-info image{ width:100rpx; height:100rpx; border-radius: 50%; overflow: hidden;}
-.user-info text{ margin-left:10rpx;}
-.user-info button{ margin:0; margin-left:10rpx;}
+/* 未登录的按钮 */
+.user-nologin {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
 
-.user-list{ margin-top:40rpx;}
-.user-list-item{ height:50rpx; border-bottom: 1px #b4b5b6 dashed; padding:10rpx; display: flex; align-items: center; justify-content: space-between;}
+.user-nologin image {
+  width: 400rpx;
+  height: 400rpx;
+  border-radius: 50%;
+  margin: auto;
+  margin-top: 250rpx
+}
+
+.title {
+  /* color: #265A88; */
+  color: rgba(218, 32, 32, 0.89);
+  font-size: 60rpx;
+  margin-top: 50rpx;
+  letter-spacing: 5rpx;
+}
+
+.slogan {
+  color: #9da4b1e5;
+  font-size: xx-small;
+  margin-top: 20rpx;
+  letter-spacing: 5rpx;
+}
+
+.user-nologin button {
+  background-color: white;
+  width: 500rpx;
+  border: 1px black solid;
+  border-radius: 50rpx;
+  margin-top: 100rpx;
+  font-weight: 100;
+}
+
+/* 登录后样式 */
+.user-login {
+  width: 100%;
+  height: 140rpx;
+  border-bottom: 10px #f5f6f8e3 solid;
+  /* background-color: #265A88; */
+  position: relative;
+}
+
+.user-login image {
+  position: absolute;
+  width: 100rpx;
+  height: 100rpx;
+  left: 30rpx;
+  top: 20rpx;
+  border-radius: 50%;
+}
+
+.user-login text {
+  position: absolute;
+  top: 50rpx;
+  left: 160rpx;
+  font-weight: 900;
+}
+
+.user-list-item {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  padding: 10px 15px;
+  font-size: 17px;
+}
+
+/* 分割线 */
+.user-list-interval {
+  border-bottom: 2px #f5f6f8e3 solid;
+}
+
+/* 左边的小图标 */
+.user-list-item .item-image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 10rpx;
+}
+
+/* 按钮清除默认样式 */
+.user-list-item button {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+/* 右边的小箭头 */
+.user-list-item .right-image {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  right: 40rpx;
+}

@@ -2,7 +2,7 @@
 const cloud = require('wx-server-sdk')
 
 cloud.init({
-  env: "dev-ghost"
+  env: 'cloud1-7gpyrc3h461bee33'
 })
 
 const db = cloud.database()
@@ -12,11 +12,11 @@ const _ = db.command
 exports.main = async (event, context) => {
   try {
 
-    if (typeof event.data == 'string'){
-      event.data = eval('('+event.data+')');
+    if (typeof event.data == 'string') {
+      event.data = eval('(' + event.data + ')');
     }
 
-    if( event.doc ){
+    if (event.doc) {
       return await db.collection(event.collection)
         .doc(event.doc)
         .update({
@@ -24,10 +24,11 @@ exports.main = async (event, context) => {
             ...event.data
           }
         })
-    }
-    else{
+    } else {
       return await db.collection(event.collection)
-        .where({ ...event.where })
+        .where({
+          ...event.where
+        })
         .update({
           data: {
             ...event.data
